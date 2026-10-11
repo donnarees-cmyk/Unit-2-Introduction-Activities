@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 2 Launch: How Do Animals and People Interact?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#15293b;
+  --paper:#f4f8fb;
+  --card:#ffffff;
+  --line:#cddae5;
+  --muted:#52677a;
+  --grass:#2c7a4b;
+  --grass-bg:#e1f2e7;
+  --sun:#f5c542;
+  --sun-bg:#fff5d1;
+  --focus:#1d5fa8;
+  --warn:#9a4a00;
+  --head:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--head);line-height:1.15;margin:0}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+
+/* hero */
+.hero{background:var(--ink);color:#fff;padding:36px 0 0}
+.hero p.small{margin:0 0 10px;color:#b9cde0;font-size:.95rem}
+.hero h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:800;letter-spacing:-.01em;max-width:16ch}
+.hero .name{display:flex;gap:10px;align-items:center;margin:22px 0 26px;flex-wrap:wrap}
+.hero .name label{color:#b9cde0}
+.hero .name input{font:inherit;padding:8px 12px;border-radius:8px;border:2px solid #3b5670;background:#1d3a52;color:#fff;min-width:240px}
+.hero .name input::placeholder{color:#8fa8bd}
+
+/* tabs */
+.tabs{display:flex;gap:6px;align-items:flex-end}
+.tab{flex:1;max-width:330px;text-align:left;font:inherit;border:0;cursor:pointer;padding:14px 18px 12px;border-radius:12px 12px 0 0;background:#24435d;color:#d4e3f0}
+.tab b{display:block;font-family:var(--head);font-size:1.15rem;color:#fff}
+.tab span{font-size:.9rem}
+.tab[aria-selected="true"]{background:var(--paper);color:var(--ink)}
+.tab[aria-selected="true"] b{color:var(--ink)}
+.tab[aria-selected="true"] span{color:var(--muted)}
+
+@media(max-width:560px){.tab{padding:10px 8px}.tab span{display:none}}
+/* turn-in */
+.shot{border:3px solid var(--ink);border-radius:12px;background:#fff;padding:18px 20px;margin-top:16px}
+.shot-head{border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:12px}
+.shot-head h3{font-size:1.4rem}
+.shot-item{margin-bottom:12px}
+.shot-item b{display:block;font-size:.95rem;color:var(--muted)}
+.shot-item p{margin:2px 0 0;white-space:pre-wrap}
+.warnbox{background:var(--sun-bg);border-left:6px solid var(--sun);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+details.dev{border:2px solid var(--line);border-radius:10px;padding:8px 14px;margin:8px 0;background:#fbfdff}
+details.dev summary{cursor:pointer;font-weight:700}
+ol.how{padding-left:22px}
+a.btn{display:inline-block;text-decoration:none}
+a.btn[hidden]{display:none}
+/* directions */
+.directions{border-color:var(--ink)}
+.directions ol{padding-left:22px;margin:6px 0 0}
+.directions li{margin-bottom:6px}
+.finish{background:var(--grass-bg);border-left:6px solid var(--grass);border-radius:0 10px 10px 0;padding:14px 18px;margin-top:16px}
+.finish b.t{font-family:var(--head);font-size:1.1rem}
+.finish ol{margin:6px 0 0}
+.finish p{margin:6px 0 0}
+/* panels */
+.panel{padding:26px 0 40px}
+.goal{background:var(--sun-bg);border-left:6px solid var(--sun);padding:14px 18px;border-radius:0 10px 10px 0;margin-bottom:22px}
+.goal b{font-family:var(--head)}
+.goal ul{margin:6px 0 0;padding-left:20px}
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:22px;font-size:.95rem;color:var(--muted)}
+.bar{flex:1;height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--grass);transition:width .3s}
+
+/* activity cards */
+.act{background:var(--card);border:2px solid var(--line);border-radius:14px;margin-bottom:20px;padding:20px 22px}
+.act.done{border-color:var(--grass)}
+.act header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}
+.act h2{font-size:1.4rem}
+.act .time{font-size:.9rem;color:var(--muted)}
+.act p{margin:.4em 0 .8em}
+.act .tip{background:var(--paper);border-radius:8px;padding:10px 14px;font-size:.96rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+.foot label{display:flex;gap:8px;align-items:center;cursor:pointer;font-weight:700}
+.foot input[type=checkbox]{width:22px;height:22px;accent-color:var(--grass)}
+
+textarea,input[type=text],select{font:inherit;color:var(--ink);width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:8px;background:#fff}
+textarea{min-height:96px;resize:vertical}
+textarea:focus,input[type=text]:focus,select:focus{border-color:var(--focus)}
+label.f{display:block;font-weight:700;margin:12px 0 4px}
+.count{font-size:.88rem;color:var(--muted);margin-top:3px}
+.count.ok{color:var(--grass);font-weight:700}
+.count.over{color:var(--warn);font-weight:700}
+
+button.btn,.chip{font:inherit;cursor:pointer;border-radius:999px;border:2px solid var(--ink);background:#fff;color:var(--ink);padding:6px 14px}
+button.btn:hover,.chip:hover{background:var(--sun-bg)}
+button.btn.primary{background:var(--ink);color:#fff}
+button.btn.primary:hover{background:#25435c}
+button.btn.small{padding:3px 10px;font-size:.9rem}
+.chip[aria-pressed="true"]{background:var(--grass);border-color:var(--grass);color:#fff}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.timer{border-color:var(--line);color:var(--muted)}
+.timer.run{border-color:var(--grass);color:var(--grass);font-weight:700}
+.timer.end{background:var(--sun);border-color:var(--sun);color:var(--ink);font-weight:700}
+
+/* stance */
+.stance{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.stance label{border:2px solid var(--line);border-radius:10px;padding:12px;text-align:center;cursor:pointer;font-weight:700}
+.stance input{position:absolute;opacity:0;pointer-events:none}
+.stance label:has(input:checked){background:var(--grass-bg);border-color:var(--grass)}
+.stance label:has(input:focus-visible){outline:3px solid var(--focus)}
+@media(max-width:560px){.stance{grid-template-columns:1fr}}
+
+/* origami steps (a real sequence: numbered) */
+.builder{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;margin-top:10px}
+@media(max-width:760px){.builder{grid-template-columns:1fr}}
+.step{display:grid;grid-template-columns:30px 120px 1fr;gap:8px;align-items:start;margin-bottom:10px}
+.step .n{font-family:var(--head);font-weight:800;background:var(--ink);color:#fff;border-radius:50%;width:30px;height:30px;display:grid;place-items:center;margin-top:5px}
+.step .tools{grid-column:3;display:flex;gap:6px}
+.card-preview{background:#fff;border:2px solid var(--ink);border-top:12px solid var(--sun);border-radius:6px;padding:14px 16px;align-self:start;
+  background-image:repeating-linear-gradient(transparent 0 27px,#d7e6f3 27px 28px);line-height:28px}
+.card-preview h3{font-size:1.05rem;line-height:28px;background:#fff}
+.card-preview ol{margin:4px 0 0;padding-left:22px}
+.card-preview li b{color:var(--grass)}
+.checks{list-style:none;padding:0;margin:12px 0 0;font-size:.96rem;line-height:1.7}
+.checks li::before{content:"\25CB";display:inline-block;width:24px;color:var(--muted)}
+.checks li.ok::before{content:"\2713";color:var(--grass);font-weight:700}
+.checks li.ok{color:var(--grass)}
+
+/* rating */
+.rate{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:6px;align-items:center;margin:6px 0}
+.rate span.h{font-size:.85rem;color:var(--muted);text-align:center}
+.rate label{border:2px solid var(--line);border-radius:8px;text-align:center;padding:6px;cursor:pointer}
+.rate input{position:absolute;opacity:0;pointer-events:none}
+.rate label:has(input:checked){background:var(--grass-bg);border-color:var(--grass);font-weight:700}
+.rate label:has(input:focus-visible){outline:3px solid var(--focus)}
+
+/* organizer rows */
+.rowcard{border:2px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:#fbfdff}
+.cols{display:grid;gap:10px}
+.cols.c2{grid-template-columns:1fr 1fr}
+.cols.c3{grid-template-columns:1fr 2fr 1fr}
+.cols.c4{grid-template-columns:1fr 1fr 1.4fr 1fr}
+@media(max-width:700px){.cols.c2,.cols.c3,.cols.c4{grid-template-columns:1fr}}
+.rowcard .tools{display:flex;justify-content:flex-end;margin-top:6px}
+.key{display:flex;gap:16px;flex-wrap:wrap;margin:6px 0 12px}
+.key div{background:var(--paper);border:2px solid var(--line);border-radius:8px;padding:6px 12px}
+.key b{margin-right:6px}
+blockquote{margin:6px 0 12px;padding:10px 16px;border-left:5px solid var(--sun);background:var(--paper);border-radius:0 8px 8px 0;white-space:pre-wrap;min-height:2.2em;color:var(--muted)}
+.assembled{background:var(--grass-bg);border-radius:10px;padding:12px 16px;margin-top:12px;min-height:3em}
+.sort{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+@media(max-width:560px){.sort{grid-template-columns:1fr}}
+
+/* tools bar */
+.end{background:#fff;border-top:2px solid var(--line);padding:22px 0 34px}
+.end .row{margin-bottom:10px}
+.end small{color:var(--muted)}
+#copybox{display:none;min-height:140px;margin-top:10px}
+#saved{font-size:.9rem;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{
+  .tabs,.hero .name,.timer,button,.progress,.chips,.end{display:none!important}
+  .panel[hidden]{display:block!important}
+  .hero{background:#fff;color:#000;padding:0}.hero p.small{color:#444}
+  .act{break-inside:avoid;border-color:#999}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="small">Grade 6 ELA &middot; Unit 2 launch</p>
+    <h1>How do animals and people interact?</h1>
+    <div class="name">
+      <label for="studentName">Your name</label>
+      <input type="text" id="studentName" data-k="name" data-label="Name" placeholder="First and last name" autocomplete="off">
+      <span id="saved" aria-live="polite" style="color:#b9cde0"></span>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Lesson days">
+      <button class="tab" role="tab" id="tab1" aria-controls="day1" aria-selected="true"><b>Day 1</b><span>Notice the bond</span></button>
+      <button class="tab" role="tab" id="tab2" aria-controls="day2" aria-selected="false"><b>Day 2</b><span>Read and paraphrase</span></button>
+      <button class="tab" role="tab" id="tab3" aria-controls="day3" aria-selected="false"><b>Turn in</b><span>Screenshot for Canvas</span></button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ================= DAY 1 ================= -->
+<section class="panel" id="day1" role="tabpanel" aria-labelledby="tab1">
+  <div class="goal">
+    <b>Today I can:</b>
+    <ul>
+      <li>Share my thinking about how people and animals connect.</li>
+      <li>Give clear directions in the right order and say them out loud.</li>
+    </ul>
+  </div>
+  <div class="progress"><span class="ptext"></span><div class="bar"><i></i></div></div>
+
+  <article class="act directions">
+    <header><h2>Directions for Day 1</h2></header>
+    <ol>
+      <li>&#9999;&#65039; Type your name at the top of the page.</li>
+      <li>1&#65039;&#8419; Do activities 1 to 5 in order. &#9201;&#65039; Use the timer buttons to help you.</li>
+      <li>&#127909; In activity 2, watch the video in Realize. &#127911; Headphones on!</li>
+      <li>&#128173; Write your own thinking in every box. Stuck? Tap a sentence-starter button.</li>
+      <li>&#129906; In activity 4, pick a paper animal and write numbered steps that tell someone how to fold it. Get all 5 checks &#9989; to turn green.</li>
+      <li>&#9989; Finished an activity? Tap <b>I finished this</b>.</li>
+      <li>&#128190; Your work saves on this device. Use the same one tomorrow!</li>
+      <li>&#128248; When your teacher says so, tap <b>Turn in</b>, take a screenshot, and upload it to Canvas.</li>
+    </ol>
+    <details class="dev ipad">
+      <summary>&#128241; Using an iPad? Tap here for iPad tips</summary>
+      <ol class="how">
+        <li>&#129517; Open this page in <b>Chrome</b> (the red, yellow, green, and blue circle). Do not use an Incognito tab, or your work will not save!</li>
+        <li>&#128260; Turn your iPad sideways so everything fits on the screen.</li>
+        <li>&#9997;&#65039; Tap a box to type. Tap the &#127908; microphone on the keyboard if you want to talk instead. Then check your spelling.</li>
+        <li>&#127911; Plug in or put on headphones before you watch the video.</li>
+        <li>&#128190; Use the <b>same iPad</b> on Day 1 and Day 2. Do not clear your Chrome browsing data (history, cookies, or site data).</li>
+        <li>&#128248; Screenshot: press the <b>top button + volume up</b> at the same time. (iPad with a Home button? Press the <b>top button + Home</b>.) Tap the little picture in the corner, tap <b>Done</b>, then <b>Save to Photos</b>.</li>
+      </ol>
+    </details>
+    <div class="finish">
+      <b class="t">&#127881; Finished your tutorial? Here is what to do next!</b>
+      <ol>
+        <li>&#9989; Make sure every activity is checked and your screenshot is uploaded to Canvas.</li>
+        <li>&#128018; Work on your <b>Vocabulary for &ldquo;My Life with the Chimpanzees.&rdquo;</b></li>
+        <li>&#128218; Then open the Canvas module and work on any other activities posted there for you.</li>
+      </ol>
+      <p>&#9995; Do not start these until your tutorial is finished. Not sure what to do? Ask your teacher.</p>
+    </div>
+  </article>
+
+
+  <article class="act">
+    <header><h2>1. Quick-write</h2><button class="btn small timer" data-timer="300">Start 5:00 timer</button></header>
+    <p>Write about a time you were with a pet or another animal. What happened? What did you and the animal do?</p>
+    <label class="f" for="d1quick">My quick-write</label>
+    <textarea id="d1quick" data-k="d1.quick" data-label="Day 1 quick-write: a time with an animal"></textarea>
+    <div class="count" data-count="d1.quick"></div>
+    <p class="tip">This is just for you. You will read it again on Day 2.</p>
+    <div class="foot"><label><input type="checkbox" data-k="d1.a1.done"> I finished this</label></div>
+  </article>
+
+  <article class="act">
+    <header><h2>2. Video: People of the Horse, Special Bond</h2><span class="time">About 12 min</span></header>
+    <p>Watch the video in Realize. Then answer the question below.</p>
+    <p><b>Is the relationship between animals and people truly a special bond?</b></p>
+    <fieldset style="border:0;padding:0;margin:0">
+      <legend class="sr" style="position:absolute;left:-9999px">Choose your stance</legend>
+      <div class="stance">
+        <label><input type="radio" name="stance" value="Yes" data-k="d1.stance" data-label="My stance on the video question"> Yes</label>
+        <label><input type="radio" name="stance" value="It depends" data-k="d1.stance"> It depends</label>
+        <label><input type="radio" name="stance" value="No" data-k="d1.stance"> No</label>
+      </div>
+    </fieldset>
+    <label class="f" for="d1reason">My reason (include one detail from the video)</label>
+    <div class="chips" data-starters="d1reason">
+      <button type="button" class="chip">I think this because</button>
+      <button type="button" class="chip">One detail that shows this is</button>
+      <button type="button" class="chip">This makes me think that</button>
+    </div>
+    <textarea id="d1reason" data-k="d1.reason" data-label="My reason for my stance"></textarea>
+    <label class="f" for="d1counter">One reason someone might disagree with me, and how I would answer them</label>
+    <textarea id="d1counter" data-k="d1.counter" data-label="A reason someone might disagree, and my answer" style="min-height:70px"></textarea>
+    <div class="foot"><label><input type="checkbox" data-k="d1.a2.done"> I finished this</label></div>
+  </article>
+
+  <article class="act">
+    <header><h2>3. Use what you already know</h2><span class="time">About 8 min</span></header>
+    <p>Think about what you already know from your own life and from things you have seen, read, or watched. Then think about this question: <b>What qualities do people and animals share?</b></p>
+    <p>Tap the qualities you think they share.</p>
+    <div class="chips" data-chips="d1.qualities" data-label="Qualities I think people and animals share">
+      <button type="button" class="chip" aria-pressed="false">loyalty</button>
+      <button type="button" class="chip" aria-pressed="false">trust</button>
+      <button type="button" class="chip" aria-pressed="false">curiosity</button>
+      <button type="button" class="chip" aria-pressed="false">play</button>
+      <button type="button" class="chip" aria-pressed="false">fear</button>
+      <button type="button" class="chip" aria-pressed="false">communication</button>
+      <button type="button" class="chip" aria-pressed="false">intelligence</button>
+      <button type="button" class="chip" aria-pressed="false">care for others</button>
+    </div>
+    <label class="f" for="d1qual">Pick one quality. Explain how it shows up for people <i>and</i> for animals.</label>
+    <textarea id="d1qual" data-k="d1.qual" data-label="One shared quality, explained"></textarea>
+    <label class="f" for="d1curious">What is one thing you already know about how people and animals treat each other, and one thing you are curious about?</label>
+    <textarea id="d1curious" data-k="d1.curious" data-label="What I already know about people and animals, and what I am curious about" style="min-height:70px"></textarea>
+    <div class="foot"><label><input type="checkbox" data-k="d1.a3.done"> I finished this</label></div>
+  </article>
+
+  <article class="act">
+    <header><h2>4. Origami directions</h2><button class="btn small timer" data-timer="900">Start 15:00 timer</button></header>
+    <div class="tip">
+      <b>What you are doing:</b> You will write step-by-step directions that tell someone how to fold a piece of paper into an animal. This is <b>origami</b>, the art of paper folding. The point is to practice giving directions in the right order, with clear words. You do not have to be good at origami.
+    </div>
+    <ol class="how" style="margin:12px 0">
+      <li><b>Pick an animal.</b> Choose a simple one, like a fish, a dog face, a cat face, a rabbit, a bird, or a frog.</li>
+      <li><b>Think through the folds.</b> If you have a square piece of paper, fold it as you write. If you do not, picture it in your mind. Not sure how to fold it? Keep it simple. Make up 4 to 6 easy folds, such as folding in half or folding a corner to the middle.</li>
+      <li><b>Write the steps below.</b> Use one box for each step. Pick a sequence word (First, Next, Then, After that, Finally) and write one action in the box.</li>
+      <li><b>Make it clear.</b> Say which corner or edge, which direction, and how far. Start each step with an action word like <i>fold</i>, <i>turn</i>, <i>flip</i>, or <i>unfold</i>.</li>
+    </ol>
+    <details class="dev"><summary>&#128161; See an example (a paper fan, not an animal)</summary>
+      <ol class="how">
+        <li><b>First:</b> Lay a sheet of paper flat on your desk with the long side facing you.</li>
+        <li><b>Next:</b> Fold the bottom edge up about one inch.</li>
+        <li><b>Then:</b> Flip the paper over and fold the edge up one inch again.</li>
+        <li><b>After that:</b> Keep flipping and folding the same size until you run out of paper.</li>
+        <li><b>Finally:</b> Pinch the middle together and let the sides spread out like a fan.</li>
+      </ol>
+      <p style="margin:6px 0">Notice how each step has one action and a detail (which edge, how far).</p>
+    </details>
+    <div class="tip" style="margin:12px 0">
+      <b>&#128279; Need to see how an animal is folded?</b> Look at one of these kid-friendly pages. They have pictures for each fold. Use the pictures to learn the folds, then write the steps below <b>in your own words</b>.
+      <div class="row" style="margin-top:8px">
+        <a class="btn" href="https://www.origami-fun.com/origami-animals.html" target="_blank" rel="noopener">&#128052; Origami Fun: easy animals</a>
+        <a class="btn" href="https://origami.guide/origami-for-kids-animals/" target="_blank" rel="noopener">&#128049; Origami Guide: cat face and more</a>
+      </div>
+      <div style="margin-top:6px;font-size:.92rem">The link opens in a new tab. When you are done looking, come back to this tab. Your work is saved.</div>
+    </div>
+    <label class="f" for="animal">My animal</label>
+    <input type="text" id="animal" data-k="d1.animal" data-label="My origami animal" placeholder="for example: fish, rabbit, dog face">
+    <div class="builder">
+      <div>
+        <h3 style="margin:14px 0 8px;font-size:1.1rem">My steps</h3>
+        <div id="steps"></div>
+        <button class="btn" id="addStep" type="button">Add a step</button>
+      </div>
+      <div>
+        <div class="card-preview" aria-live="polite">
+          <h3>Read-aloud card: <span id="pvAnimal">your animal</span></h3>
+          <ol id="pvSteps"></ol>
+        </div>
+        <ul class="checks" id="stepChecks" aria-label="Directions checklist"></ul>
+      </div>
+    </div>
+    <div class="foot"><label><input type="checkbox" data-k="d1.a4.done"> I finished this</label></div>
+  </article>
+
+  <article class="act" data-list-wrap>
+    <header><h2>5. Read aloud and check yourself</h2><span class="time">About 8 min</span></header>
+    <p>Quietly read your directions out loud to yourself, slowly and clearly. Then rate your own directions. Tap one box in each row.</p>
+    <div style="margin-top:12px">
+      <div class="rate"><span></span><span class="h">Needs work</span><span class="h">Getting there</span><span class="h">Strong</span></div>
+      <div class="rate"><span>My steps are in a logical order</span>
+        <label><input type="radio" name="r1" value="Needs work" data-k="d1.r1" data-label="My rating: steps in a logical order"> 1</label>
+        <label><input type="radio" name="r1" value="Getting there" data-k="d1.r1"> 2</label>
+        <label><input type="radio" name="r1" value="Strong" data-k="d1.r1"> 3</label></div>
+      <div class="rate"><span>I read at a good pace with a clear voice</span>
+        <label><input type="radio" name="r2" value="Needs work" data-k="d1.r2" data-label="My rating: pace and clear voice"> 1</label>
+        <label><input type="radio" name="r2" value="Getting there" data-k="d1.r2"> 2</label>
+        <label><input type="radio" name="r2" value="Strong" data-k="d1.r2"> 3</label></div>
+      <div class="rate"><span>My words are clear enough for someone else to follow</span>
+        <label><input type="radio" name="r3" value="Needs work" data-k="d1.r3" data-label="My rating: clear words someone else could follow"> 1</label>
+        <label><input type="radio" name="r3" value="Getting there" data-k="d1.r3"> 2</label>
+        <label><input type="radio" name="r3" value="Strong" data-k="d1.r3"> 3</label></div>
+    </div>
+    <label class="f" for="fbWell">One thing I did well in my directions</label>
+    <textarea id="fbWell" data-k="d1.fbwell" data-label="One thing I did well in my directions" style="min-height:70px"></textarea>
+    <label class="f" for="fbNext">One thing I would change in my directions after reading them aloud</label>
+    <textarea id="fbNext" data-k="d1.fbnext" data-label="One change I would make to my directions" style="min-height:70px"></textarea>
+    <div class="foot"><label><input type="checkbox" data-k="d1.a5.done"> I finished this</label>
+      <button class="btn primary" type="button" data-goto="2">Go to Day 2</button></div>
+  </article>
+</section>
+
+<!-- ================= DAY 2 ================= -->
+<section class="panel" id="day2" role="tabpanel" aria-labelledby="tab2" hidden>
+  <div class="goal">
+    <b>Today I can:</b>
+    <ul>
+      <li>Retell the main ideas of &ldquo;Reading Buddies&rdquo; in my own words.</li>
+      <li>Use evidence to answer the unit question.</li>
+    </ul>
+  </div>
+  <div class="progress"><span class="ptext"></span><div class="bar"><i></i></div></div>
+
+  <article class="act directions">
+    <header><h2>Directions for Day 2</h2></header>
+    <ol>
+      <li>&#128190; Use the same device as Day 1 so your work is still here. &#9999;&#65039; Check that your name is at the top.</li>
+      <li>1&#65039;&#8419; Do activities 1 to 7 in order.</li>
+      <li>&#128214; Open &ldquo;Reading Buddies&rdquo; in Realize (or where your teacher posted it). Read once for the gist. &#128396;&#65039; Read again and mark it with the key.</li>
+      <li>&#128221; Write a gist for each section in 15 words or fewer, in your own words. Add at least 2 words to your Word Network.</li>
+      <li>&#9997;&#65039; Write your summary in 2 or 3 sentences. No copying from the text!</li>
+      <li>&#129504; Think and write your answers on your own. Look back at the text for details.</li>
+      <li>&#127919; Finish your QuickWrite, EQ Notes, and exit ticket. Tap <b>I finished this</b> on each one.</li>
+      <li>&#128248; Tap <b>Turn in</b>, check your work, open your screenshot page, take a screenshot, and upload it to Canvas.</li>
+    </ol>
+    <details class="dev ipad">
+      <summary>&#128241; Using an iPad? Tap here for iPad tips</summary>
+      <ol class="how">
+        <li>&#129517; Open this page in <b>Chrome</b> (the red, yellow, green, and blue circle). Do not use an Incognito tab, or your work will not save!</li>
+        <li>&#128260; Turn your iPad sideways so everything fits on the screen.</li>
+        <li>&#9997;&#65039; Tap a box to type. Tap the &#127908; microphone on the keyboard if you want to talk instead. Then check your spelling.</li>
+        <li>&#127911; Plug in or put on headphones before you watch the video.</li>
+        <li>&#128190; Use the <b>same iPad</b> on Day 1 and Day 2. Do not clear your Chrome browsing data (history, cookies, or site data).</li>
+        <li>&#128248; Screenshot: press the <b>top button + volume up</b> at the same time. (iPad with a Home button? Press the <b>top button + Home</b>.) Tap the little picture in the corner, tap <b>Done</b>, then <b>Save to Photos</b>.</li>
+      </ol>
+    </details>
+    <div class="finish">
+      <b class="t">&#127881; Finished your tutorial? Here is what to do next!</b>
+      <ol>
+        <li>&#9989; Make sure every activity is checked and your screenshot is uploaded to Canvas.</li>
+        <li>&#128018; Work on your <b>Vocabulary for &ldquo;My Life with the Chimpanzees.&rdquo;</b></li>
+        <li>&#128218; Then open the Canvas module and work on any other activities posted there for you.</li>
+      </ol>
+      <p>&#9995; Do not start these until your tutorial is finished. Not sure what to do? Ask your teacher.</p>
+    </div>
+  </article>
+
+
+  <article class="act">
+    <header><h2>1. Launch: look back</h2><span class="time">About 5 min</span></header>
+    <p>Here is what you wrote yesterday:</p>
+    <blockquote data-mirror="d1.quick">You have not written a Day 1 quick-write yet.</blockquote>
+    <label class="f" for="d2launch">What do you notice? Does it connect to people and animals sharing something?</label>
+    <textarea id="d2launch" data-k="d2.launch" data-label="Day 2 launch: what I notice in my Day 1 writing" style="min-height:70px"></textarea>
+    <div class="foot"><label><input type="checkbox" data-k="d2.a1.done"> I finished this</label></div>
+  </article>
+
+  <article class="act">
+    <header><h2>2. Read &ldquo;Reading Buddies&rdquo;</h2><span class="time">About 12 min</span></header>
+    <p>Open the text in Realize (or where your teacher posted it). <b>First read:</b> get the gist. <b>Second read:</b> mark the text with this key.</p>
+    <div class="key">
+      <div><b>&#9733;</b>main point</div>
+      <div><b>&harr;</b>people and animals interacting</div>
+      <div><b>?</b>new or confusing word</div>
+    </div>
+    <h3 style="font-size:1.1rem;margin:14px 0 8px">Gist by section</h3>
+    <p class="tip">Write the gist in <b>15 words or fewer</b> and use your own words.</p>
+    <div id="gist" data-list="gist" data-label="Gist by section" style="margin-top:12px"></div>
+    <button class="btn" id="addGist" type="button">Add a section</button>
+    <div class="foot"><label><input type="checkbox" data-k="d2.a2.done"> I finished this</label></div>
+  </article>
+
+  <article class="act">
+    <header><h2>3. Word Network</h2><span class="time">Add words as you read</span></header>
+    <p>Add at least two words from the text that are new to you or that helped you understand how people and animals interact.</p>
+    <div id="words" data-list="words" data-label="Word Network"></div>
+    <button class="btn" id="addWord" type="button">Add a word</button>
+    <div class="foot"><label><input type="checkbox" data-k="d2.a3.done"> I finished this</label></div>
+  </article>
+
+  <article class="act">
+    <header><h2>4. Write a summary</h2><span class="time">About 10 min</span></header>
+    <p>Use your gists to write a 2&ndash;3 sentence summary of &ldquo;Reading Buddies.&rdquo; Do not copy sentences from the text.</p>
+    <div class="chips" data-starters="d2sum">
+      <button type="button" class="chip">In &ldquo;Reading Buddies,&rdquo; the author explains that</button>
+      <button type="button" class="chip">One important detail is</button>
+      <button type="button" class="chip">Overall, the text shows</button>
+    </div>
+    <label class="f" for="d2sum">My summary</label>
+    <textarea id="d2sum" data-k="d2.sum" data-label="My summary of Reading Buddies" style="min-height:130px"></textarea>
+    <div class="count" id="sumCount"></div>
+    <ul class="checks" id="sumChecks" style="margin-top:8px">
+      <li data-sc="sent">2 or 3 sentences</li>
+      <li data-sc="own">Check yourself: it is in my own words</li>
+      <li data-sc="key">Check yourself: it has only the key ideas, not my opinion</li>
+    </ul>
+    <div class="foot"><label><input type="checkbox" data-k="d2.a4.done"> I finished this</label></div>
+  </article>
+
+  <article class="act">
+    <header><h2>5. Think and write</h2><button class="btn small timer" data-timer="240">Start 4:00 timer</button></header>
+    <p>Answer each question on your own. Look back at the text for details.</p>
+    <label class="f" for="q1">What happens in the text, and who is involved?</label>
+    <textarea id="q1" data-k="d2.q1" data-label="Response: what happens and who is involved" style="min-height:70px"></textarea>
+    <label class="f" for="q2">How do the people and the animals interact? Point to a detail.</label>
+    <textarea id="q2" data-k="d2.q2" data-label="Response: how people and animals interact" style="min-height:70px"></textarea>
+    <label class="f" for="q3">Why does this interaction matter? What does it change for the person or the animal?</label>
+    <textarea id="q3" data-k="d2.q3" data-label="Response: why the interaction matters" style="min-height:70px"></textarea>
+    <div class="foot"><label><input type="checkbox" data-k="d2.a5.done"> I finished this</label></div>
+  </article>
+
+  <article class="act">
+    <header><h2>6. QuickWrite: answer the unit question</h2><span class="time">About 10 min</span></header>
+    <p><b>How do animals and people interact?</b> Build your answer one part at a time.</p>
+    <label class="f" for="cl">Claim: People and animals interact by&hellip;</label>
+    <textarea id="cl" data-k="d2.claim" data-label="Claim" style="min-height:64px"></textarea>
+    <label class="f" for="evd">Evidence: For example, in the video or in &ldquo;Reading Buddies,&rdquo;&hellip;</label>
+    <textarea id="evd" data-k="d2.evid" data-label="Evidence" style="min-height:64px"></textarea>
+    <label class="f" for="rs">Reasoning: This shows that&hellip;</label>
+    <textarea id="rs" data-k="d2.reason" data-label="Reasoning" style="min-height:64px"></textarea>
+    <div class="assembled" id="assembled" aria-live="polite"><span style="color:var(--muted)">Your paragraph will build here as you write.</span></div>
+
+    <h3 style="font-size:1.1rem;margin:22px 0 8px">EQ Notes</h3>
+    <p class="tip">Save evidence you can use later for the unit Performance-Based Assessment.</p>
+    <div id="ev" data-list="ev" data-label="EQ Notes" style="margin-top:12px"></div>
+    <button class="btn" id="addEv" type="button">Add evidence</button>
+    <div class="foot"><label><input type="checkbox" data-k="d2.a6.done"> I finished this</label></div>
+  </article>
+
+  <article class="act">
+    <header><h2>7. Exit ticket</h2><span class="time">About 3 min</span></header>
+    <p>Look at your Day 1 quick-write again:</p>
+    <blockquote data-mirror="d1.quick">You have not written a Day 1 quick-write yet.</blockquote>
+    <label class="f" for="exit">How has your thinking about people and animals changed? Cite one piece of evidence from the video or &ldquo;Reading Buddies.&rdquo;</label>
+    <textarea id="exit" data-k="d2.exit" data-label="Exit ticket: how my thinking changed, with evidence"></textarea>
+    <p style="margin-top:14px"><b>How do I feel about today's goal?</b></p>
+    <div class="stance sort">
+      <label><input type="radio" name="self" value="Got it" data-k="d2.self" data-label="Self-check"> Got it</label>
+      <label><input type="radio" name="self" value="Almost there" data-k="d2.self"> Almost there</label>
+      <label><input type="radio" name="self" value="Needs re-teaching" data-k="d2.self"> Need help</label>
+    </div>
+    <div class="foot"><label><input type="checkbox" data-k="d2.a7.done"> I finished this</label>
+      <button class="btn primary" type="button" data-goto="3">Go to Turn in</button></div>
+  </article>
+</section>
+
+<!-- ================= TURN IN ================= -->
+<section class="panel" id="day3" role="tabpanel" aria-labelledby="tab3" hidden>
+  <div class="goal">
+    <b>Turn in your work for a grade</b>
+    <ul>
+      <li>Check that your work is finished.</li>
+      <li>Open your screenshot page and take a screenshot.</li>
+      <li>Upload the screenshot to Canvas.</li>
+    </ul>
+  </div>
+
+  <article class="act">
+    <header><h2>1. Check your work</h2></header>
+    <ul class="checks" id="turnChecks" aria-live="polite"></ul>
+    <p class="tip">You can still go back to Day 1 or Day 2 to finish anything that is missing.</p>
+  </article>
+
+  <article class="act">
+    <header><h2>2. Open your screenshot page</h2></header>
+    <p>This page puts your answers in one place with your name and the time. Pick a day, then take your screenshot.</p>
+    <div class="row">
+      <button class="btn primary" type="button" data-shot="0">Show my Day 1 work</button>
+      <button class="btn primary" type="button" data-shot="1">Show my Day 2 work</button>
+    </div>
+    <p class="tip" style="margin-top:12px">Long answers? Scroll down and take more than one screenshot. Upload all of them.</p>
+    <div id="shot" class="shot" hidden></div>
+  </article>
+
+  <article class="act">
+    <header><h2>3. Take your screenshot</h2></header>
+    <p>Tap the device you are using.</p>
+    <details class="dev"><summary>Chromebook</summary>
+      <ol class="how"><li>Press <b>Shift + Ctrl + Show windows</b> (the key with a rectangle and two lines, near the top row).</li><li>Choose the screenshot (camera) option, then drag a box around your work.</li><li>Your screenshot saves to your Downloads folder.</li></ol></details>
+    <details class="dev"><summary>Windows laptop</summary>
+      <ol class="how"><li>Press <b>Windows key + Shift + S</b>.</li><li>Drag a box around your work.</li><li>Open Paint or the Snipping Tool notification to save it as a picture file.</li></ol></details>
+    <details class="dev"><summary>Mac</summary>
+      <ol class="how"><li>Press <b>Command + Shift + 4</b> and drag a box around your work.</li><li>The picture saves to your desktop.</li></ol></details>
+    <details class="dev"><summary>&#128241; iPad</summary>
+      <ol class="how"><li>&#128248; Press the <b>top button and the volume-up button</b> at the same time. On iPads with a Home button, press the <b>top button and the Home button</b>.</li><li>&#128247; Tap the little picture in the corner, tap <b>Done</b>, then <b>Save to Photos</b>.</li><li>&#11014;&#65039; In Canvas, tap <b>Choose File</b>, then <b>Photo Library</b>, and pick your screenshot.</li></ol></details>
+    <p class="tip">Check your screenshot. Can you read your name and your answers?</p>
+  </article>
+
+  <article class="act">
+    <header><h2>4. Upload it to Canvas</h2></header>
+    <ol class="how">
+      <li>&#128421;&#65039; Open Canvas and go to our class.</li>
+      <li>&#128193; Open this assignment.</li>
+      <li>&#128228; Click <b>Submit Assignment</b>, then <b>Choose File</b>, and pick your screenshot.</li>
+      <li>&#9989; Click <b>Submit Assignment</b> again. Look for the green &ldquo;Submitted&rdquo; message.</li>
+    </ol>
+    <div class="row" style="margin:10px 0"><a class="btn primary" id="canvasLink" target="_blank" rel="noopener" hidden>Open the Canvas assignment</a></div>
+    <div class="foot"><label><input type="checkbox" data-k="d3.uploaded"> I uploaded my screenshot to Canvas</label></div>
+  </article>
+  <article class="act directions">
+    <header><h2>After you submit</h2></header>
+    <div class="finish">
+      <b class="t">&#127881; Finished your tutorial? Here is what to do next!</b>
+      <ol>
+        <li>&#9989; Make sure every activity is checked and your screenshot is uploaded to Canvas.</li>
+        <li>&#128018; Work on your <b>Vocabulary for &ldquo;My Life with the Chimpanzees.&rdquo;</b></li>
+        <li>&#128218; Then open the Canvas module and work on any other activities posted there for you.</li>
+      </ol>
+      <p>&#9995; Do not start these until your tutorial is finished. Not sure what to do? Ask your teacher.</p>
+    </div>
+  </article>
+</section>
+</main>
+
+<div class="end">
+  <div class="wrap">
+    <div class="row">
+      <button class="btn primary" id="copyAll" type="button">Copy all my work</button>
+      <button class="btn" id="printBtn" type="button">Print</button>
+      <button class="btn" id="clearAll" type="button">Clear my work</button>
+    </div>
+    <textarea id="copybox" readonly aria-label="All my work, ready to copy"></textarea>
+    <p><small>Your work saves on this device only. Use &ldquo;Copy all my work&rdquo; and paste it into your assignment to turn it in.<br>
+    Teacher-made practice for Savvas myPerspectives Florida, Grade 6, Unit 2. Not published by Savvas.</small></p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='unit2-launch-v1';
+  /* TEACHER: paste your Canvas assignment link between the quotes (must start with https://).
+     Or share this page as  yourpage.html?canvas=https://... */
+  var CANVAS_URL='';
+  var S={f:{},l:{}};
+  try{ var raw=localStorage.getItem(KEY); if(raw) S=JSON.parse(raw); }catch(e){}
+  S.f=S.f||{}; S.l=S.l||{};
+  var saveTimer=null, savedEl=document.getElementById('saved');
+  function save(){
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(function(){
+      try{ localStorage.setItem(KEY,JSON.stringify(S)); savedEl.textContent='Saved on this device'; }
+      catch(e){ savedEl.textContent='Could not save here. Copy your work before you leave.'; }
+    },250);
+  }
+  function h(tag,attrs,kids){
+    var el=document.createElement(tag);
+    if(attrs) Object.keys(attrs).forEach(function(k){
+      if(k==='class') el.className=attrs[k];
+      else if(k==='text') el.textContent=attrs[k];
+      else if(k.slice(0,2)==='on') el.addEventListener(k.slice(2),attrs[k]);
+      else el.setAttribute(k,attrs[k]);
+    });
+    (kids||[]).forEach(function(c){ el.appendChild(c); });
+    return el;
+  }
+  function words(s){ s=(s||'').trim(); return s?s.split(/\s+/).length:0; }
+
+  /* ---------- tabs ---------- */
+  var tabs=[document.getElementById('tab1'),document.getElementById('tab2'),document.getElementById('tab3')];
+  var panels=[document.getElementById('day1'),document.getElementById('day2'),document.getElementById('day3')];
+  function showDay(i,focus){
+    tabs.forEach(function(t,j){ t.setAttribute('aria-selected',j===i?'true':'false'); t.tabIndex=j===i?0:-1; });
+    panels.forEach(function(p,j){ p.hidden=j!==i; });
+    S.f.tab=i; save(); mirror(); updateProgress(); if(i===2) turnChecks();
+    if(focus) window.scrollTo({top:0});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){ showDay(i); });
+    t.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ var n=(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length; showDay(n); tabs[n].focus(); }
+    });
+  });
+  document.querySelectorAll('[data-goto]').forEach(function(b){
+    b.addEventListener('click',function(){ showDay(+b.dataset.goto-1,true); });
+  });
+
+  /* ---------- generic fields ---------- */
+  function mirror(){
+    document.querySelectorAll('[data-mirror]').forEach(function(el){
+      var v=(S.f[el.dataset.mirror]||'').trim();
+      el.textContent=v||'You have not written a Day 1 quick-write yet.';
+    });
+  }
+  function counts(){
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var n=words(S.f[el.dataset.count]);
+      el.textContent=n+' word'+(n===1?'':'s');
+    });
+  }
+  document.querySelectorAll('[data-k]').forEach(function(el){
+    var k=el.dataset.k;
+    if(el.type==='checkbox'){
+      el.checked=!!S.f[k];
+      el.addEventListener('change',function(){ S.f[k]=el.checked; el.closest('.act').classList.toggle('done',el.checked); updateProgress(); save(); });
+      if(el.checked) el.closest('.act').classList.add('done');
+    }else if(el.type==='radio'){
+      el.checked=S.f[k]===el.value;
+      el.addEventListener('change',function(){ if(el.checked){ S.f[k]=el.value; save(); } });
+    }else{
+      if(S.f[k]!=null) el.value=S.f[k];
+      el.addEventListener('input',function(){ S.f[k]=el.value; mirror(); counts(); extras(); save(); });
+    }
+  });
+
+  /* starter chips insert text */
+  document.querySelectorAll('[data-starters]').forEach(function(box){
+    var ta=document.getElementById(box.dataset.starters);
+    box.querySelectorAll('.chip').forEach(function(c){
+      c.addEventListener('click',function(){
+        var add=c.textContent.trim()+' ';
+        ta.value=(ta.value&&!/\s$/.test(ta.value)?ta.value+' ':ta.value)+add;
+        ta.focus(); ta.dispatchEvent(new Event('input'));
+      });
+    });
+  });
+
+  /* toggle chips (array value) */
+  document.querySelectorAll('[data-chips]').forEach(function(box){
+    var k=box.dataset.chips; var arr=S.f[k]||[];
+    box.querySelectorAll('.chip').forEach(function(c){
+      c.setAttribute('aria-pressed',arr.indexOf(c.textContent)>-1?'true':'false');
+      c.addEventListener('click',function(){
+        var cur=S.f[k]||[]; var i=cur.indexOf(c.textContent);
+        if(i>-1) cur.splice(i,1); else cur.push(c.textContent);
+        S.f[k]=cur; c.setAttribute('aria-pressed',i>-1?'false':'true'); save();
+      });
+    });
+  });
+
+  /* timers */
+  document.querySelectorAll('[data-timer]').forEach(function(btn){
+    var total=+btn.dataset.timer, left=total, iv=null, orig=btn.textContent;
+    function fmt(s){ return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2); }
+    btn.addEventListener('click',function(){
+      if(iv){ clearInterval(iv); iv=null; left=total; btn.textContent=orig; btn.className=btn.className.replace(/ ?(run|end)/g,''); return; }
+      if(left<=0){ left=total; }
+      btn.classList.remove('end'); btn.classList.add('run');
+      btn.textContent=fmt(left)+' left. Tap to reset';
+      iv=setInterval(function(){
+        left--;
+        if(left<=0){ clearInterval(iv); iv=null; btn.classList.remove('run'); btn.classList.add('end'); btn.textContent="Time's up. Tap to reset"; left=total; }
+        else btn.textContent=fmt(left)+' left. Tap to reset';
+      },1000);
+    });
+  });
+
+  /* ---------- list widgets ---------- */
+  function ensure(name,defaults){ if(!S.l[name]||!S.l[name].length) S.l[name]=defaults; }
+  function move(arr,i,d){ var j=i+d; if(j<0||j>=arr.length) return; var t=arr[i]; arr[i]=arr[j]; arr[j]=t; }
+  function toolBtn(text,label,fn){ return h('button',{type:'button',class:'btn small','aria-label':label,text:text,onclick:fn}); }
+
+  /* origami steps */
+  var SEQ=['First','Next','Then','After that','Finally'];
+  ensure('steps',[{w:'First',t:''},{w:'Next',t:''},{w:'Then',t:''},{w:'Finally',t:''}]);
+  function renderSteps(){
+    var box=document.getElementById('steps'); box.innerHTML='';
+    S.l.steps.forEach(function(st,i){
+      var sel=h('select',{'aria-label':'Sequence word for step '+(i+1)},SEQ.map(function(w){ var o=h('option',{value:w,text:w}); if(w===st.w) o.selected=true; return o; }));
+      sel.addEventListener('change',function(){ st.w=sel.value; stepsLive(); save(); });
+      var inp=h('input',{type:'text','aria-label':'Directions for step '+(i+1),placeholder:'What do I do?'}); inp.value=st.t;
+      inp.addEventListener('input',function(){ st.t=inp.value; stepsLive(); save(); });
+      var tools=h('div',{class:'tools'},[
+        toolBtn('Up','Move step '+(i+1)+' up',function(){ move(S.l.steps,i,-1); renderSteps(); save(); }),
+        toolBtn('Down','Move step '+(i+1)+' down',function(){ move(S.l.steps,i,1); renderSteps(); save(); }),
+        toolBtn('Remove','Remove step '+(i+1),function(){ S.l.steps.splice(i,1); renderSteps(); save(); })
+      ]);
+      box.appendChild(h('div',{class:'step'},[h('div',{class:'n',text:String(i+1)}),sel,inp,tools]));
+    });
+    stepsLive();
+  }
+  function stepsLive(){
+    var st=S.l.steps;
+    document.getElementById('pvAnimal').textContent=(S.f['d1.animal']||'').trim()||'your animal';
+    var ol=document.getElementById('pvSteps'); ol.innerHTML='';
+    st.forEach(function(s){ if(s.t.trim()) ol.appendChild(h('li',{},[h('b',{text:s.w+': '}),document.createTextNode(s.t.trim())])); });
+    var used={}; st.forEach(function(s){ used[s.w]=1; });
+    var checks=[
+      ['At least 4 steps',st.length>=4],
+      ['Every step has directions',st.length>0&&st.every(function(s){return s.t.trim();})],
+      ['Starts with "First"',st.length>0&&st[0].w==='First'],
+      ['Ends with "Finally"',st.length>0&&st[st.length-1].w==='Finally'],
+      ['Uses at least 3 different sequence words',Object.keys(used).length>=3]
+    ];
+    var ul=document.getElementById('stepChecks'); ul.innerHTML='';
+    checks.forEach(function(c){ ul.appendChild(h('li',{class:c[1]?'ok':'',text:c[0]})); });
+  }
+  document.getElementById('addStep').addEventListener('click',function(){
+    var n=S.l.steps.length; S.l.steps.splice(Math.max(0,n-1),0,{w:'Then',t:''});
+    if(n===0) S.l.steps=[{w:'First',t:''}];
+    renderSteps(); save();
+  });
+
+  /* gist rows */
+  var TAGS=['Main point','People and animals interact','New or confusing word','Question I have'];
+  ensure('gist',[{s:'',g:'',tag:TAGS[0]},{s:'',g:'',tag:TAGS[1]},{s:'',g:'',tag:TAGS[0]}]);
+  function renderGist(){
+    var box=document.getElementById('gist'); box.innerHTML='';
+    S.l.gist.forEach(function(r,i){
+      var sec=h('input',{type:'text','aria-label':'Section '+(i+1)+' location',placeholder:'Paragraph or page'}); sec.value=r.s;
+      sec.addEventListener('input',function(){ r.s=sec.value; save(); });
+      var g=h('textarea',{'aria-label':'Gist for section '+(i+1),style:'min-height:64px',placeholder:'The gist in my own words'}); g.value=r.g;
+      var cnt=h('div',{class:'count'});
+      function upd(){ var n=words(r.g); cnt.textContent=n+' words'+(n>15?'. Try to trim it down.':(n>0?'. Nice and short.':'')); cnt.className='count'+(n>15?' over':(n>0?' ok':'')); }
+      g.addEventListener('input',function(){ r.g=g.value; upd(); save(); }); upd();
+      var tag=h('select',{'aria-label':'Mark for section '+(i+1)},TAGS.map(function(t){ var o=h('option',{value:t,text:t}); if(t===r.tag) o.selected=true; return o; }));
+      tag.addEventListener('change',function(){ r.tag=tag.value; save(); });
+      box.appendChild(h('div',{class:'rowcard'},[
+        h('div',{class:'cols c3'},[sec,h('div',{},[g,cnt]),tag]),
+        h('div',{class:'tools'},[toolBtn('Remove','Remove section '+(i+1),function(){ S.l.gist.splice(i,1); renderGist(); save(); })])
+      ]));
+    });
+  }
+  document.getElementById('addGist').addEventListener('click',function(){ S.l.gist.push({s:'',g:'',tag:TAGS[0]}); renderGist(); save(); });
+
+  /* word network */
+  ensure('words',[{w:'',p:'',m:'',r:''},{w:'',p:'',m:'',r:''}]);
+  function renderWords(){
+    var box=document.getElementById('words'); box.innerHTML='';
+    S.l.words.forEach(function(r,i){
+      function f(key,label,ph){
+        var inp=h('input',{type:'text','aria-label':label+' (word '+(i+1)+')',placeholder:ph}); inp.value=r[key];
+        inp.addEventListener('input',function(){ r[key]=inp.value; save(); }); return inp;
+      }
+      box.appendChild(h('div',{class:'rowcard'},[
+        h('div',{class:'cols c4'},[f('w','Word','Word'),f('p','Where I found it','Page or paragraph'),f('m','What it means in my words','What it means in my words'),f('r','A related word','Similar or opposite word')]),
+        h('div',{class:'tools'},[toolBtn('Remove','Remove word '+(i+1),function(){ S.l.words.splice(i,1); renderWords(); save(); })])
+      ]));
+    });
+  }
+  document.getElementById('addWord').addEventListener('click',function(){ S.l.words.push({w:'',p:'',m:'',r:''}); renderWords(); save(); });
+
+  /* EQ notes */
+  var SRC=['Video: People of the Horse','Reading Buddies','My own experience','Other selection'];
+  ensure('ev',[{src:SRC[0],e:'',s:''},{src:SRC[1],e:'',s:''},{src:SRC[1],e:'',s:''}]);
+  function renderEv(){
+    var box=document.getElementById('ev'); box.innerHTML='';
+    S.l.ev.forEach(function(r,i){
+      var src=h('select',{'aria-label':'Source for note '+(i+1)},SRC.map(function(t){ var o=h('option',{value:t,text:t}); if(t===r.src) o.selected=true; return o; }));
+      src.addEventListener('change',function(){ r.src=src.value; save(); });
+      var e=h('textarea',{'aria-label':'Evidence for note '+(i+1),style:'min-height:64px',placeholder:'Evidence: a detail, event, or idea'}); e.value=r.e;
+      e.addEventListener('input',function(){ r.e=e.value; save(); });
+      var s=h('textarea',{'aria-label':'What note '+(i+1)+' shows',style:'min-height:64px',placeholder:'This shows that...'}); s.value=r.s;
+      s.addEventListener('input',function(){ r.s=s.value; save(); });
+      box.appendChild(h('div',{class:'rowcard'},[
+        h('div',{class:'cols c3'},[src,e,s]),
+        h('div',{class:'tools'},[toolBtn('Remove','Remove note '+(i+1),function(){ S.l.ev.splice(i,1); renderEv(); save(); })])
+      ]));
+    });
+  }
+  document.getElementById('addEv').addEventListener('click',function(){ S.l.ev.push({src:SRC[1],e:'',s:''}); renderEv(); save(); });
+
+  /* ---------- extras: summary checks, assembled paragraph, origami title ---------- */
+  function extras(){
+    var sum=S.f['d2.sum']||'';
+    var sents=(sum.match(/[^.!?]+[.!?]+/g)||[]).filter(function(x){return x.trim().length>2;}).length;
+    var n=words(sum);
+    var c=document.getElementById('sumCount');
+    if(c){ c.textContent=n+' words, '+sents+' sentence'+(sents===1?'':'s'); c.className='count'+((sents>=2&&sents<=3)?' ok':''); }
+    var li=document.querySelector('[data-sc="sent"]'); if(li) li.className=(sents>=2&&sents<=3)?'ok':'';
+    var p=[S.f['d2.claim'],S.f['d2.evid'],S.f['d2.reason']].map(function(x){return (x||'').trim();}).filter(Boolean).join(' ');
+    var a=document.getElementById('assembled');
+    if(a){ a.textContent=p||'Your paragraph will build here as you write.'; a.style.color=p?'':'var(--muted)'; }
+    if(document.getElementById('pvAnimal')) document.getElementById('pvAnimal').textContent=(S.f['d1.animal']||'').trim()||'your animal';
+  }
+  document.querySelectorAll('[data-sc="own"],[data-sc="key"]').forEach(function(li){
+    var k='d2.sc.'+li.dataset.sc;
+    li.setAttribute('role','button'); li.tabIndex=0; li.style.cursor='pointer';
+    if(S.f[k]) li.className='ok';
+    function tog(){ S.f[k]=!S.f[k]; li.className=S.f[k]?'ok':''; save(); }
+    li.addEventListener('click',tog);
+    li.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tog(); } });
+  });
+
+  /* ---------- progress ---------- */
+  function updateProgress(){
+    panels.slice(0,2).forEach(function(p){
+      var boxes=p.querySelectorAll('input[type=checkbox][data-k$=".done"]');
+      var done=0; boxes.forEach(function(b){ if(b.checked) done++; });
+      p.querySelector('.ptext').textContent=done+' of '+boxes.length+' activities finished';
+      p.querySelector('.bar i').style.width=(boxes.length?done/boxes.length*100:0)+'%';
+    });
+    if(!panels[2].hidden) turnChecks();
+  }
+  function doneCount(p){
+    var b=p.querySelectorAll('input[type=checkbox][data-k$=".done"]'), d=0;
+    b.forEach(function(x){ if(x.checked) d++; });
+    return {done:d,total:b.length};
+  }
+  function turnChecks(){
+    var ul=document.getElementById('turnChecks'); ul.innerHTML='';
+    var nm=(S.f.name||'').trim(), a=doneCount(panels[0]), b=doneCount(panels[1]);
+    [[nm?'My name is at the top of the page':'Add your name at the top of the page',!!nm],
+     ['Day 1: '+a.done+' of '+a.total+' activities finished',a.done===a.total],
+     ['Day 2: '+b.done+' of '+b.total+' activities finished',b.done===b.total]
+    ].forEach(function(c){ ul.appendChild(h('li',{class:c[1]?'ok':'',text:c[0]})); });
+  }
+
+  /* ---------- collect work (used by copy + screenshot page) ---------- */
+  function listLines(name){
+    var L=S.l[name]||[], lines=[];
+    if(name==='gist') L.forEach(function(r,i){ if(r.g.trim()||r.s.trim()) lines.push((i+1)+'. ['+r.s.trim()+'] '+r.g.trim()+' ('+r.tag+')'); });
+    if(name==='words') L.forEach(function(r){ if(r.w.trim()) lines.push('- '+r.w.trim()+' ('+r.p.trim()+'): '+r.m.trim()+(r.r.trim()?'; related: '+r.r.trim():'')); });
+    if(name==='ev') L.forEach(function(r){ if(r.e.trim()||r.s.trim()) lines.push('- ['+r.src+'] '+r.e.trim()+' | This shows: '+r.s.trim()); });
+    return lines;
+  }
+  function collectItems(panel){
+    var out=[];
+    panel.querySelectorAll('[data-k],[data-list],[data-chips]').forEach(function(el){
+      var label=el.dataset.label;
+      if(el.dataset.list){ var lines=listLines(el.dataset.list); if(lines.length) out.push({label:label,value:lines.join('\n')}); return; }
+      if(el.dataset.chips){ var a=S.f[el.dataset.chips]||[]; if(a.length) out.push({label:label,value:a.join(', ')}); return; }
+      if(el.type==='checkbox'||!label) return;
+      var v=S.f[el.dataset.k]; if(v&&String(v).trim()) out.push({label:label,value:String(v).trim()});
+    });
+    if(panel.id==='day1'){
+      var st=S.l.steps.filter(function(x){return x.t.trim();});
+      if(st.length) out.push({label:'Origami directions for '+((S.f['d1.animal']||'').trim()||'my animal'),value:st.map(function(x,i){ return (i+1)+'. '+x.w+': '+x.t.trim(); }).join('\n')});
+    }
+    return out;
+  }
+  function exportText(){
+    var out=['Unit 2 launch: How do animals and people interact?','Name: '+(S.f.name||''),''];
+    panels.slice(0,2).forEach(function(p,i){
+      out.push('--- Day '+(i+1)+' ---','');
+      collectItems(p).forEach(function(it){ out.push(it.label+':',it.value,''); });
+    });
+    return out.join('\n');
+  }
+  function renderShot(i){
+    var box=document.getElementById('shot'); box.innerHTML=''; box.hidden=false;
+    var c=doneCount(panels[i]), items=collectItems(panels[i]), nm=(S.f.name||'').trim();
+    box.appendChild(h('div',{class:'shot-head'},[
+      h('h3',{text:'Day '+(i+1)+' work: Unit 2 launch'}),
+      h('div',{text:'Name: '+(nm||'(add your name at the top of the page)')}),
+      h('div',{text:new Date().toLocaleString()}),
+      h('div',{text:c.done+' of '+c.total+' activities finished'})
+    ]));
+    if(!nm) box.appendChild(h('div',{class:'warnbox',text:'Your name is missing. Scroll to the top, add it, then open this page again before you take your screenshot.'}));
+    if(!items.length) box.appendChild(h('p',{text:'No answers yet. Go back to Day '+(i+1)+' and write your responses.'}));
+    items.forEach(function(it){ box.appendChild(h('div',{class:'shot-item'},[h('b',{text:it.label}),h('p',{text:it.value})])); });
+    box.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  document.querySelectorAll('[data-shot]').forEach(function(b){
+    b.addEventListener('click',function(){ renderShot(+b.dataset.shot); });
+  });
+  (function(){
+    var url=CANVAS_URL, q=null;
+    try{ q=new URLSearchParams(location.search).get('canvas'); }catch(e){}
+    if(!url&&q) url=q;
+    var a=document.getElementById('canvasLink');
+    if(url&&/^https:\/\//i.test(url)){ a.href=url; a.hidden=false; }
+  })();
+  document.getElementById('copyAll').addEventListener('click',function(){
+    var txt=exportText(), box=document.getElementById('copybox'), btn=this;
+    box.value=txt;
+    function fallback(){ box.style.display='block'; box.focus(); box.select(); btn.textContent='Select all and copy'; }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ btn.textContent='Copied. Paste it into your assignment'; setTimeout(function(){ btn.textContent='Copy all my work'; },3000); },fallback);
+    }else fallback();
+  });
+  document.getElementById('printBtn').addEventListener('click',function(){ window.print(); });
+  var clearBtn=document.getElementById('clearAll'), clearT=null;
+  clearBtn.addEventListener('click',function(){
+    if(clearBtn.dataset.armed){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      location.reload();
+    }else{
+      clearBtn.dataset.armed='1'; clearBtn.textContent='Click again to erase everything';
+      clearT=setTimeout(function(){ delete clearBtn.dataset.armed; clearBtn.textContent='Clear my work'; },4000);
+    }
+  });
+
+  /* ---------- init ---------- */
+  renderSteps(); renderGist(); renderWords(); renderEv();
+  mirror(); counts(); extras();
+  showDay(S.f.tab===1||S.f.tab===2?S.f.tab:0);
+})();
+</script>
+</body>
+</html>
